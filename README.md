@@ -308,6 +308,180 @@ const pages = {
   `
 };
 
+const players = [
+  {
+    id: 1,
+    name: "Raven",
+    role: "TOP",
+    emoji: "🛡️",
+    age: 21,
+    skill: 64,
+    potential: 82,
+    mechanics: 68,
+    teamwork: 61,
+    strategy: 65,
+    morale: 78,
+    salary: 1800,
+    contract: 2
+  },
+  {
+    id: 2,
+    name: "Kaito",
+    role: "JUNGLE",
+    emoji: "🌲",
+    age: 19,
+    skill: 71,
+    potential: 94,
+    mechanics: 76,
+    teamwork: 69,
+    strategy: 73,
+    morale: 85,
+    salary: 2400,
+    contract: 3
+  },
+  {
+    id: 3,
+    name: "Zephyr",
+    role: "MID",
+    emoji: "🔮",
+    age: 20,
+    skill: 68,
+    potential: 91,
+    mechanics: 74,
+    teamwork: 63,
+    strategy: 72,
+    morale: 80,
+    salary: 2200,
+    contract: 2
+  },
+  {
+    id: 4,
+    name: "Nami",
+    role: "ADC",
+    emoji: "🏹",
+    age: 18,
+    skill: 59,
+    potential: 90,
+    mechanics: 66,
+    teamwork: 60,
+    strategy: 58,
+    morale: 88,
+    salary: 1500,
+    contract: 3
+  },
+  {
+    id: 5,
+    name: "Lyn",
+    role: "SUPPORT",
+    emoji: "💚",
+    age: 23,
+    skill: 62,
+    potential: 76,
+    mechanics: 57,
+    teamwork: 78,
+    strategy: 70,
+    morale: 74,
+    salary: 1600,
+    contract: 1
+  }
+];
+
+function renderRoster() {
+  const average = Math.round(
+    players.reduce((sum, p) => sum + p.skill, 0)
+    / players.length
+  );
+
+  return `
+    <section class="hero">
+      <div class="label">TEAM ROSTER</div>
+      <h2>🦊 YOUR TEAM</h2>
+      <p>นักแข่ง ${players.length}/5 คน
+      · พลังทีมเฉลี่ย ${average}</p>
+    </section>
+
+    <h2 class="section-title">👥 รายชื่อนักแข่ง</h2>
+
+    ${players.map(p => `
+      <div class="card" style="margin-bottom:10px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="
+            font-size:30px;
+            background:#263d60;
+            border:1px solid #54739c;
+            border-radius:9px;
+            padding:9px;
+          ">${p.emoji}</div>
+
+          <div style="flex:1;min-width:0">
+            <h3>${p.name}</h3>
+            <div class="muted">
+              ${p.role} · อายุ ${p.age} ปี
+            </div>
+            <div class="muted">
+              ศักยภาพ ${p.potential}/100
+            </div>
+          </div>
+
+          <div style="text-align:right">
+            <div class="big">${p.skill}</div>
+            <div class="muted">ฝีมือ</div>
+          </div>
+        </div>
+
+        <div style="
+          height:7px;
+          background:#09111f;
+          border-radius:5px;
+          margin:12px 0;
+          overflow:hidden;
+        ">
+          <div style="
+            height:100%;
+            width:${p.skill}%;
+            background:#58a6ff;
+          "></div>
+        </div>
+
+        <div class="stat">
+          <span>🎮 กลไกการเล่น</span>
+          <b>${p.mechanics}</b>
+        </div>
+
+        <div class="stat">
+          <span>🤝 ทีมเวิร์ก</span>
+          <b>${p.teamwork}</b>
+        </div>
+
+        <div class="stat">
+          <span>🧠 แท็กติก</span>
+          <b>${p.strategy}</b>
+        </div>
+
+        <div class="stat">
+          <span>❤️ ขวัญกำลังใจ</span>
+          <b>${p.morale}%</b>
+        </div>
+
+        <div class="stat">
+          <span>💰 เงินเดือน/เดือน</span>
+          <b>$${p.salary.toLocaleString("en-US")}</b>
+        </div>
+
+        <div class="stat">
+          <span>📝 สัญญาคงเหลือ</span>
+          <b>${p.contract} ปี</b>
+        </div>
+      </div>
+    `).join("")}
+
+    <div class="notice">
+      💡 นักแข่งที่มีศักยภาพสูงยังพัฒนาได้อีกมาก
+      แม้ฝีมือปัจจุบันจะยังไม่ถึงระดับซูเปอร์สตาร์
+    </div>
+  `;
+  }
+    
 function showPage(name) {
   document.getElementById("app").innerHTML =
     pages[name] + '<div class="footer">PIXEL ESPORTS MANAGER · BUILD 0.1</div>';
