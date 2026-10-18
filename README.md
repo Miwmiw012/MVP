@@ -483,8 +483,11 @@ function renderRoster() {
   }
     
 function showPage(name) {
-  document.getElementById("app").innerHTML =
-    pages[name] + '<div class="footer">PIXEL ESPORTS MANAGER · BUILD 0.1</div>';
+  
+document.getElementById("app").innerHTML =
+    (name === "roster" ? renderRoster() : pages[name])
+    + '<div class="footer">PIXEL ESPORTS MANAGER · BUILD 0.1</div>';
+
 
   document.querySelectorAll("#menu button").forEach(button => {
     button.classList.toggle("active", button.dataset.page === name);
