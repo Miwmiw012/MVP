@@ -276,14 +276,67 @@ const pages = {
     </div>
   `,
 
-  market: `
-    <h2>💱 ตลาดนักแข่ง</h2>
-    <div class="card">
-      <h3>ตลาดซื้อขายยังไม่เปิด</h3>
-      <p>ในขั้นถัดไป คุณจะสามารถค้นหา
-      ซื้อ และเจรจาสัญญากับนักแข่งได้</p>
+  
+market: `
+  <h2>💱 ตลาดนักแข่ง</h2>
+  <p>ค้นหานักแข่งเพื่อยกระดับสโมสร</p>
+
+  <div class="card">
+    <h3>💰 งบประมาณสโมสร</h3>
+    <div class="big" id="marketBudget">
+      $${clubBudget.toLocaleString("en-US")}
     </div>
-  `,
+    <div class="muted">
+      ค่าตัว = เงินเดือนต่อเดือน × 10
+    </div>
+  </div>
+
+  <h2 class="section-title">🔎 นักแข่งที่เปิดขาย</h2>
+
+  ${marketPlayers.length === 0
+    ? `<div class="card">
+        ตลาดว่าง ไม่มีนักแข่งให้ซื้อในขณะนี้
+       </div>`
+    : marketPlayers.map(p => `
+      <div class="card" style="margin-bottom:10px">
+        <div style="display:flex;gap:10px;align-items:center">
+          <div style="font-size:28px">${p.emoji}</div>
+          <div style="flex:1">
+            <h3>${p.name}</h3>
+            <div class="muted">
+              ${p.role} · อายุ ${p.age}
+            </div>
+            <div class="muted">
+              ฝีมือ ${p.skill} · ศักยภาพ ${p.potential}
+            </div>
+          </div>
+        </div>
+
+        <div class="stat">
+          <span>💵 ค่าตัว</span>
+          <b>$${playerPrice(p).toLocaleString("en-US")}</b>
+        </div>
+
+        <div class="stat">
+          <span>📝 เงินเดือน/เดือน</span>
+          <b>$${p.salary.toLocaleString("en-US")}</b>
+        </div>
+
+        <button
+          style="width:100%;margin-top:10px"
+          onclick="buyPlayer(${p.id})">
+          🤝 เจรจาซื้อนักแข่ง
+        </button>
+      </div>
+    `).join("")
+  }
+
+  <div class="notice">
+    ตลาดรุ่นทดลอง: นักแข่งในรายการนี้เป็นผู้เล่นอิสระ
+    ขั้นถัดไปเราจะเพิ่มระบบทีมคู่แข่งและการซื้อขายระหว่างทีม
+  </div>
+`,
+
 
   training: `
     <h2>🎯 ศูนย์ฝึกซ้อม</h2>
