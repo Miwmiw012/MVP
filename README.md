@@ -666,7 +666,7 @@ document.getElementById("app").innerHTML =
   document.querySelectorAll("#menu button").forEach(button => {
     button.classList.toggle("active", button.dataset.page === name);
   });
-
+refreshBudget();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
