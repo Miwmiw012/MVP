@@ -307,6 +307,127 @@ const pages = {
     </div>
   `
 };
+let clubBudget = 120000;
+
+const marketPlayers = [
+  {
+    id: 101, name: "Vex", role: "TOP", emoji: "⚔️",
+    age: 20, skill: 76, potential: 88,
+    mechanics: 79, teamwork: 71, strategy: 75,
+    morale: 80, salary: 2800, contract: 2
+  },
+  {
+    id: 102, name: "Nova", role: "JUNGLE", emoji: "🌌",
+    age: 18, skill: 65, potential: 95,
+    mechanics: 69, teamwork: 64, strategy: 67,
+    morale: 85, salary: 2100, contract: 3
+  },
+  {
+    id: 103, name: "Blitz", role: "MID", emoji: "⚡",
+    age: 22, skill: 81, potential: 89,
+    mechanics: 86, teamwork: 76, strategy: 80,
+    morale: 77, salary: 3500, contract: 2
+  },
+  {
+    id: 104, name: "Iris", role: "ADC", emoji: "✨",
+    age: 19, skill: 73, potential: 92,
+    mechanics: 78, teamwork: 70, strategy: 72,
+    morale: 82, salary: 2600, contract: 3
+  },
+  {
+    id: 105, name: "Moss", role: "SUPPORT", emoji: "🍀",
+    age: 24, skill: 70, potential: 79,
+    mechanics: 64, teamwork: 84, strategy: 78,
+    morale: 79, salary: 2300, contract: 1
+  }
+];
+
+function refreshBudget() {
+  const el = document.getElementById("money");
+  if (el) {
+    el.textContent =
+      "$" + clubBudget.toLocaleString("en-US");
+  }
+}
+
+function playerPrice(p) {
+  return p.salary * 10;
+}
+
+function buyPlayer(id) {
+  const p = marketPlayers.find(x => x.id === id);
+
+  if (!p) {
+    alert("ไม่พบนักแข่งคนนี้ในตลาด");
+    return;
+  }
+
+  if (players.length >= 5) {
+    alert("ทีมเต็มแล้ว ต้องปล่อยตัวนักแข่งก่อน");
+    return;
+  }
+
+  if (players.some(x => x.role === p.role)) {
+    alert("ทีมมีผู้เล่นตำแหน่งนี้แล้ว");
+    return;
+  }
+
+  const price = playerPrice(p);
+
+  if (clubBudget < price) {
+    alert("งบประมาณไม่เพียงพอ");
+    return;
+  }
+
+  if (!confirm(
+    `เซ็นสัญญา ${p.name} (${p.role})?\n` +
+    `ค่าตัว $${price.toLocaleString("en-US")}\n` +
+    `เงินเดือน $${p.salary.toLocaleString("en-US")}/เดือน`
+  )) return;
+
+  clubBudget -= price;
+
+  players.push({
+    ...p,
+    id: Date.now(),
+    contract: 2
+  });
+
+  const index = marketPlayers.findIndex(x => x.id === id);
+  marketPlayers.splice(index, 1);
+
+  refreshBudget();
+  showPage("market");
+
+  alert(`เซ็นสัญญากับ ${p.name} สำเร็จ!`);
+}
+
+function releasePlayer(id) {
+  const index = players.findIndex(p => p.id === id);
+
+  if (index < 0) return;
+
+  if (players.length <= 5) {
+    alert("ต้องมีนักแข่งครบ 5 ตำแหน่งก่อน");
+    return;
+  }
+
+  const p = players[index];
+
+  if (!confirm(`ต้องการปล่อยตัว ${p.name} ใช่หรือไม่?`)) {
+    return;
+  }
+
+  players.splice(index, 1);
+
+  marketPlayers.push({
+    ...p,
+    id: Date.now() + Math.floor(Math.random() * 1000)
+  });
+
+  showPage("roster");
+  }
+    
 
 const players = [
   {
